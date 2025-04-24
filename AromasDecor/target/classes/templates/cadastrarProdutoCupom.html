@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Produto com Cupom</title>
+</head>
+<body>
+    <h2>Cadastro de Produto com Cupom</h2>
+    <form action="/cadastrar_produto_cupom" method="post">
+        <h3>Produto</h3>
+        Código: <input type="number" name="codigoProduto" required><br>
+        Nome: <input type="text" name="nomeProduto" required><br>
+        Descrição: <input type="text" name="descricaoProduto"><br>
+        Preço: <input type="number" step="0.01" name="preco" required><br>
+        Estoque: <input type="number" name="estoque" required><br>
+        Data de Cadastro: <input type="date" name="dataCadastro" required><br>
+
+        <h3>Cupom</h3>
+        Código: <input type="number" name="codigoCupom" required><br>
+        Desconto: <input type="number" step="0.01" name="valorDesconto"><br>
+        Início: <input type="date" name="dataInicio"><br>
+        Vencimento: <input type="date" name="dataVencimento"><br>
+        Descrição: <input type="text" name="descricaoCupom"><br>
+        Condições de Uso: <input type="text" name="condicoesUso"><br>
+
+        <input type="submit" value="Cadastrar">
+    </form>
+</body>
+</html>
