@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CompraAvaliaDAO {
 
@@ -25,7 +27,12 @@ public class CompraAvaliaDAO {
             stmt.setInt(5, compra.getNota());
             stmt.setString(6, compra.getCpfCliente());
             stmt.setInt(7, compra.getCodigoProduto());
-            stmt.setInt(8, compra.getCodigoCupom());
+
+            if (compra.getCodigoCupom() == 0) {
+                stmt.setNull(8, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(8, compra.getCodigoCupom());
+            }
 
             stmt.executeUpdate();
             System.out.println("Compra registrada com sucesso!");
@@ -49,21 +56,30 @@ public class CompraAvaliaDAO {
         return 0;
     }
 
-    public int contarAvaliacoes() {
-        String sql = "SELECT COUNT(*) FROM compra_avalia WHERE avaliacao IS NOT NULL";
+    public Map<Integer, Integer> contarAvaliacoesPorNota() {
+    	    String sql = "SELECT nota, COUNT(*) AS quantidade FROM compra_avalia WHERE nota IS NOT NULL GROUP BY nota";
+    	    Map<Integer, Integer> mapa = new HashMap<>();
+    	
+    	    try (Connection conn = Conexao.conectar();
+    	         PreparedStatement stmt = conn.prepareStatement(sql);
+    	         ResultSet rs = stmt.executeQuery()) {
 
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+    	        while (rs.next()) {
+    	            mapa.put(rs.getInt("nota"), rs.getInt("quantidade"));
+    	        }
+    	    } catch (SQLException e) {
+    	        System.out.println("Erro ao contar avaliações por nota: " + e.getMessage());
+    	    }
 
-            if (rs.next()) return rs.getInt(1);
-        } catch (SQLException e) {
-            System.out.println("Erro ao contar avaliações: " + e.getMessage());
-        }
-
-        return 0;
-    }
+    	    // Garante que todas as notas de 1 a 5 existam no mapa
+    	    for (int i = 1; i <= 5; i++) {
+    	        mapa.putIfAbsent(i, 0);
+    	    }
+    	
+    	    return mapa;
+    	}
     
+  
     public List<CompraAvalia> listarCompras() {
         String sql = "SELECT * FROM compra_avalia";
         List<CompraAvalia> compras = new ArrayList<>();
@@ -91,6 +107,22 @@ public class CompraAvaliaDAO {
         
         return compras;
     }
+
+    public void darAvaliacao(int codigoProduto, int nota, String avaliacao) {
+        String sql = "UPDATE compra_avalia SET nota = ?, avaliacao = ? WHERE codigo_produto = ?";
+
+        try (Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nota);
+            stmt.setString(2, avaliacao);
+            stmt.setInt(3, codigoProduto);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     
     public List<CompraAvalia> listarAvaliacoes() {
         String sql = "SELECT * FROM compra_avalia WHERE avaliacao IS NOT NULL";
@@ -138,4 +170,47 @@ public class CompraAvaliaDAO {
             System.out.println("Erro ao remover compra: " + e.getMessage());
         }
     }
+
+    public int contarAvaliacoes() {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM compra_avalia WHERE nota IS NOT NULL";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao contar avaliações: " + e.getMessage());
+        }
+
+        return total;
+    }
+
+    public int contarComprasComCupom() {
+        String sql = "SELECT COUNT(*) FROM compra_avalia WHERE codigo_cupom IS NOT NULL";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("Erro ao contar compras com cupom: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public int contarComprasSemCupom() {
+        String sql = "SELECT COUNT(*) FROM compra_avalia WHERE codigo_cupom IS NULL";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("Erro ao contar compras sem cupom: " + e.getMessage());
+        }
+        return 0;
+    }
+
 }

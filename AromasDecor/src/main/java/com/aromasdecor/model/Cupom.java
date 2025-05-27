@@ -8,9 +8,9 @@ public class Cupom {
     private Date dataVencimento;
     private double valorDesconto;
     private String descricao;
-    private String condicoesUso;
+    private double condicoesUso;
 
-    public Cupom(int codigo, Date dataInicio, Date dataVencimento, double valorDesconto, String descricao, String condicoesUso) {
+    public Cupom(int codigo, Date dataInicio, Date dataVencimento, double valorDesconto, String descricao, double condicoesUso) {
         this.codigo = codigo;
         this.dataInicio = dataInicio;
         this.dataVencimento = dataVencimento;
@@ -24,5 +24,5 @@ public class Cupom {
     public Date getDataVencimento() { return dataVencimento; }
     public double getValorDesconto() { return valorDesconto; }
     public String getDescricao() { return descricao; }
-    public String getCondicoesUso() { return condicoesUso; }
+    public double getCondicoesUso() { return condicoesUso; }
 }

@@ -102,4 +102,33 @@ public class ProdutoDAO {
             System.out.println("Erro ao atualizar produto: " + e.getMessage());
         }
     }
+
+    public Produto buscarPorId(int id) {
+        String sql = "SELECT * FROM produtos WHERE codigo = ?";
+        Produto produto = null;
+
+        try (Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                produto = new Produto(
+                    rs.getInt("codigo"),
+                    rs.getString("nome"),
+                    rs.getString("descricao"),
+                    rs.getDouble("preco"),
+                    rs.getInt("estoque"),
+                    rs.getDate("dataCadastro")
+                );
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return produto;
+    }
 }

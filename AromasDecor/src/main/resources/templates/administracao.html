@@ -1,208 +1,255 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-<meta charset="UTF-8">
-<title>Dashboard - Constância Aromas Decor</title>
-<link rel="icon" href="{{ url_for('static', filename='logo.ico') }}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-    body {
-        margin: 0;
-        font-family: "DM Sans", sans-serif;
-        background-color: #f9f9f9;
-    }
+	<meta charset="UTF-8">
+	<title>Dashboard - Constância Aromas Decor</title>
+	<link rel="icon" href="{{ url_for('static', filename='logo.ico') }}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<style>
+		body {
+			margin: 0;
+			font-family: "DM Sans", sans-serif;
+			background-color: #f9f9f9;
+		}
 
-    nav {
-        background-color: #b6a729;
-        width: 100%;
-        top: 0;
-        position: fixed;
-        display: flex;
-        align-items: center;
-        padding: 10px 30px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+		nav {
+			background-color: #b6a729;
+			width: 100%;
+			top: 0;
+			position: fixed;
+			display: flex;
+			align-items: center;
+			padding: 10px 30px;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+		}
 
-    nav a {
-        font-size: 14px;
-        margin: 0 15px;
-        color: white;
-        text-decoration: none;
-        text-transform: uppercase;
-    }
+		nav a {
+			font-size: 14px;
+			margin: 0 15px;
+			color: white;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
 
-    nav a:hover {
-        text-decoration: underline;
-    }
+		nav a:hover {
+			text-decoration: underline;
+		}
 
-    .total {
-        margin-top: 220px;
-        padding: 0 80px;
-    }
+		.total {
+			margin-top: 220px;
+			padding: 0 80px;
+		}
 
-    .total h1 {
-        font-family: 'DM Sans', sans-serif;
-        color: #5e5524;	
-    }
+		.total h1 {
+			font-family: 'DM Sans', sans-serif;
+			color: #5e5524;
+		}
 
-    .cards-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 30px;
-        margin: 30px 0;
-    }
+		.cards-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 30px;
+			margin: 30px 0;
+		}
 
-    .card {
-        background-color: white;
-        width: 200px;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        text-align: left;
-    }
+		.card {
+			background-color: white;
+			width: 200px;
+			padding: 20px;
+			border-radius: 12px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+			text-align: left;
+		}
 
-    .card i {
-        font-size: 24px;
-        color: #b6a729;
-    }
+		.card i {
+			font-size: 24px;
+			color: #b6a729;
+		}
 
-    .card h2 {
-        font-size: 14px;
-        margin-top: 10px;
-        color: #836635;
-    }
+		.card h2 {
+			font-size: 14px;
+			margin-top: 10px;
+			color: #836635;
+		}
 
-    .card p {
-        font-size: 22px;
-        font-weight: bold;
-        color: #5e5524;
-    }
-	
-	.modal {
-	    display: none; 
-	    position: fixed;
-	    z-index: 1;
-	    left: 0;
-	    top: 0;
-	    width: 100%;
-	    height: 100%;
-	    background-color: rgba(0, 0, 0, 0.4); 
-	    padding-top: 60px;
-	}
-	
-	.modal h2 {
-		color: #836635;
-	}
-	
-	.modal h3 {
-		font-weight: normal;
-	}
+		.card p {
+			font-size: 22px;
+			font-weight: bold;
+			color: #5e5524;
+		}
 
-	.modal-content {
-	    background-color: #fefefe;
-	    margin: 5% auto;
-	    padding: 20px;
-	    border: 1px solid #888;
-	    width: 80%;
-	    border-radius: 12px;
-	    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-	}
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			padding-top: 60px;
+		}
 
-	.close-btn {
-	    color: #aaa;
-	    float: right;
-	    font-size: 28px;
-	    font-weight: bold;
-	    cursor: pointer;
-	}
+		.modal h2 {
+			color: #836635;
+		}
 
-	.close-btn:hover,
-	.close-btn:focus {
-	    color: black;
-	    text-decoration: none;
-	    cursor: pointer;
-	}
+		.modal h3 {
+			font-weight: normal;
+		}
 
-	#modalTable {
-	    width: 100%;
-	    margin-top: 20px;
-	    border-collapse: collapse;
-	}
-	
-	table {
-		border-spacing: 0;
-	}
-	
-	th {
-	    font-size: 16px;
-	    margin: 10px 0;
-	    color: #836635;
-		line-height: 40px;
-	}
+		.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			height: 500px;
+			overflow-y: scroll;
+			border-radius: 12px;
+			box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		}
 
-	td {
-	    border: 1px solid black;
-		padding: 0 20px;
-		width: 200px;
-		font-size: 13px;
-		text-align: center;
-	}
-	
-	button:hover {
-		text-decoration: underline;
-		cursor: pointer;
-	}
-	
-	#tabelaProdutos input, #tabelaCupons input {
-		border: none;
-	}
+		.close-btn {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+		}
 
-</style>
+		.close-btn:hover,
+		.close-btn:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		#modalTable {
+			width: 100%;
+			margin-top: 20px;
+			border-collapse: collapse;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 40px;
+			font-family: "Raleway", sans-serif;
+			color: #3e3c2d;
+			background-color: white;
+			border-radius: 8px;
+			overflow: hidden;
+			box-shadow: 0 0 10px rgba(131, 102, 53, 0.1);
+		}
+
+		thead {
+			background-color: #83663546;
+		}
+
+		thead th {
+			padding: 14px 12px;
+			font-family: "Crimson Text", serif;
+			font-weight: 600;
+			color: #5e5524;
+			text-align: left;
+			border-bottom: 2px solid #b6a729;
+		}
+
+		tbody tr {
+			background-color: white;
+			transition: background-color 0.3s ease;
+		}
+
+		tbody tr:hover {
+			background-color: #f3efc5;
+		}
+
+		tbody td {
+			padding: 12px 12px;
+			border-bottom: 1px solid #ddd;
+			font-size: 15px;
+		}
+
+		tbody td:last-child {
+			white-space: nowrap;
+		}
+
+		tbody td button,
+		tbody td form button {
+			background-color: transparent;
+			border: none;
+			color: #836635;
+			font-weight: 600;
+			cursor: pointer;
+			padding: 0;
+			margin-left: 10px;
+			transition: color 0.3s;
+		}
+
+		tbody td button:hover,
+		tbody td form button:hover {
+			color: #b6a729;
+			text-decoration: underline;
+		}
+
+		#tabelaProdutos input,
+		#tabelaCupons input {
+			border: none;
+			background: transparent;
+			width: 100%;
+			font-size: 14px;
+			padding: 4px 6px;
+			font-family: "Raleway", sans-serif;
+		}
+	</style>
 </head>
+
 <body>
-    <nav>
-        <img style="width: 140px; margin-right: 40px;" src="download.png">
+	<nav>
+		<img style="width: 140px; margin-right: 40px;" src="/download.png">
 		<a href="/">Home Site</a>
-        <a href="/adm">Dashboard</a>
-        <a href="/funcionarios">Funcionários</a>
-    </nav>
+		<a href="/adm">Dashboard</a>
+		<a href="/funcionarios">Funcionários</a>
+	</nav>
 
 	<div class="total">
-        <h1>Indicadores da Plataforma</h1>
-        <section class="cards-container">
+		<h1>Indicadores da Plataforma</h1>
+		<section class="cards-container">
 			<div class="card" onclick="openModalProdutos()">
-                <i class="bi bi-box-seam"></i>
-                <h2>Produtos</h2>
-                <p th:text="${totalProdutos}">0</p>
-            </div>
-            <div class="card" onclick="openModalClientes()">
-                <i class="bi bi-people"></i>
-                <h2>Clientes</h2>
-                <p th:text="${totalClientes}">0</p>
-            </div>
-            <div class="card" onclick="openModalCupons()">
-                <i class="bi bi-ticket"></i>
-                <h2>Cupons</h2>
-                <p th:text="${totalCupons}">0</p>
-            </div>
-            <div class="card" onclick="openModalCompras()">
-                <i class="bi bi-cart-check"></i>
-                <h2>Compras Finalizadas</h2>
-                <p th:text="${totalCompras}">0</p>
-            </div>
-            <div class="card" onclick="openModalAvaliacoes()">
-                <i class="bi bi-star"></i>
-                <h2>Avaliações</h2>
-                <p th:text="${totalAvaliacoes}">0</p>
-            </div>
-        </section>
+				<i class="bi bi-box-seam"></i>
+				<h2>Produtos</h2>
+				<p th:text="${totalProdutos}">0</p>
+			</div>
+			<div class="card" onclick="openModalClientes()">
+				<i class="bi bi-people"></i>
+				<h2>Clientes</h2>
+				<p th:text="${totalClientes}">0</p>
+			</div>
+			<div class="card" onclick="openModalCupons()">
+				<i class="bi bi-ticket"></i>
+				<h2>Cupons Ativos</h2>
+				<p th:text="${totalCupons}">0</p>
+			</div>
+			<div class="card" onclick="openModalCompras()">
+				<i class="bi bi-cart-check"></i>
+				<h2>Compras Finalizadas</h2>
+				<p th:text="${totalCompras}">0</p>
+			</div>
+			<div class="card" onclick="openModalAvaliacoes()">
+				<i class="bi bi-star"></i>
+				<h2>Avaliações</h2>
+				<p th:text="${totalAvaliacoes}">0</p>
+			</div>
+		</section>
 
-        <!-- <section class="cards-container">
+		<!-- <section class="cards-container">
             <div class="card">
                 <i class="bi bi-cash-stack"></i>
                 <h2>Faturamento Total</h2>
@@ -214,273 +261,359 @@
                 <p>R$<span th:text="${ticketMedio}">0,00</span></p>
             </div>
         </section>  -->
-    </div>
-	
+	</div>
+
 	<!-- Modal Produtos -->
 	<div id="modalProdutos" class="modal">
-	    <div class="modal-content">
-	        <span class="close-btn" onclick="closeModal('modalProdutos')">&times;</span>
-	        <h2>Gerenciar Produtos</h2>
-			
+		<div class="modal-content">
+			<span class="close-btn" onclick="closeModal('modalProdutos')">&times;</span>
+			<h2>Gerenciar Produtos</h2>
+
 			<button type="button" onclick="mostrarFormularioAdicionar()" style="margin-bottom: 20px;">
-			    + Adicionar Produto
+				+ Adicionar Produto
 			</button>
-			
+
 			<div id="adicionarProdutoForm" style="display: none;">
-			    <h3>Adicionar Produto</h3>
-			    <form action="/adicionarProduto" method="post">
-			        <label for="nomeProduto">Nome:</label>
-			        <input type="text" id="nomeProduto" name="nome" required><br><br>
+				<h3>Adicionar Produto</h3>
+				<form action="/adicionarProduto" method="post">
+					<label for="nomeProduto">Nome:</label>
+					<input type="text" id="nomeProduto" name="nome" required><br><br>
 
-			        <label for="precoProduto">Preço:</label>
-			        <input type="number" id="precoProduto" name="preco" step="0.01" required><br><br>
+					<label for="precoProduto">Preço:</label>
+					<input type="number" id="precoProduto" name="preco" step="0.01" required><br><br>
 
-			        <label for="descricaoProduto">Descrição:</label>
-			        <input type="text" id="descricaoProduto" name="descricao" required><br><br>
+					<label for="descricaoProduto">Descrição:</label>
+					<input type="text" id="descricaoProduto" name="descricao" required><br><br>
 
-			        <label for="estoqueProduto">Estoque:</label>
-			        <input type="number" id="estoqueProduto" name="estoque" required><br><br>
+					<label for="estoqueProduto">Estoque:</label>
+					<input type="number" id="estoqueProduto" name="estoque" required><br><br>
 
-			        <button type="submit">Adicionar Produto</button>
-			        <button type="button" onclick="cancelarAdicionarProduto()">Cancelar</button>
-			    </form>
+					<button type="submit">Adicionar Produto</button>
+					<button type="button" onclick="cancelarAdicionarProduto()">Cancelar</button>
+				</form>
 			</div>
 
-	        <!-- Lista de produtos -->
-	        <h3>Lista de Produtos</h3>
-	        <table id="tabelaProdutos">
+			<!-- Lista de produtos -->
+			<h3>Lista de Produtos</h3>
+			<table id="tabelaProdutos">
 				<thead>
-	                <tr>
-	                    <th>Nome</th>
-	                    <th>Preço</th>
-	                    <th>Descrição</th>
+					<tr>
+						<th>Nome</th>
+						<th>Preço</th>
+						<th>Descrição</th>
 						<th>Estoque</th>
-	                </tr>
-	            </thead>
+					</tr>
+				</thead>
 				<tbody>
 					<tr th:each="produto : ${produtos}">
 						<form method="post" action="/editarProduto">
-						    <input type="hidden" name="codigo" th:value="${produto.codigo}" />
-						    <td><input type="text" name="nome" th:value="${produto.nome}" /></td>
-						    <td><input type="number" step="0.01" name="preco" th:value="${produto.preco}" /></td>
-						    <td><input type="text" name="descricao" th:value="${produto.descricao}" /></td>
+							<input type="hidden" name="codigo" th:value="${produto.codigo}" />
+							<td><input type="text" name="nome" th:value="${produto.nome}" /></td>
+							<td><input type="number" step="0.01" name="preco" th:value="${produto.preco}" /></td>
+							<td><input type="text" name="descricao" th:value="${produto.descricao}" /></td>
 							<td><input type="text" name="estoque" th:value="${produto.estoque}" /></td>
-						    <td style="border: none"><button style="background-color: transparent; border: none; color: green; border-radius: 5px" type="submit">Salvar</button></td>
+							<td style="border: none"><button
+									style="background-color: transparent; border: none; color: green; border-radius: 5px"
+									type="submit">Salvar</button></td>
 						</form>
 
 
-					    <td style="border: none">
-					        <!-- Formulário de exclusão -->
-					        <form action="/removerProduto" method="post" style="display:inline;">
-					            <input type="hidden" name="produtoId" th:value="${produto.codigo}" />
-					            <button style="background-color: transparent; border: none; color: red; border-radius: 5px" type="submit">Excluir</button>
-					        </form>
-					    </td>
+						<td style="border: none">
+							<!-- Formulário de exclusão -->
+							<form action="/removerProduto" method="post" style="display:inline;">
+								<input type="hidden" name="produtoId" th:value="${produto.codigo}" />
+								<button
+									style="background-color: transparent; border: none; color: red; border-radius: 5px"
+									type="submit">Excluir</button>
+							</form>
+						</td>
 					</tr>
 				</tbody>
-	        </table>
-	    </div>
+			</table>
+		</div>
 	</div>
 
 	<!-- Modal Clientes -->
 	<div id="modalClientes" class="modal">
-	    <div class="modal-content">
-	        <span class="close-btn" onclick="closeModal('modalClientes')">&times;</span>
-	        <h2>Gerenciar Clientes</h2>
+		<div class="modal-content">
+			<span class="close-btn" onclick="closeModal('modalClientes')">&times;</span>
+			<h2>Gerenciar Clientes</h2>
 
-	        <h3>Lista de Clientes</h3>
-	        <table id="tabelaClientes">
+			<h3>Lista de Clientes</h3>
+			<table id="tabelaClientes">
 				<thead>
-                <tr>
-                    <th>Nome</th>
-                </tr>
-            </thead>
-	            <tr th:each="cliente : ${clientes}">
-	                <td th:text="${cliente.nome}"></td>
-	                <td style="border: none">
+					<tr>
+						<th>Nome</th>
+					</tr>
+				</thead>
+				<tr th:each="cliente : ${clientes}">
+					<td th:text="${cliente.nome}"></td>
+					<td style="border: none">
 						<form action="/removerCliente" method="post">
-						    <input type="hidden" name="clienteId" th:value="${cliente.cpf}" />  <!-- Assumindo que o CPF seja o identificador -->
-						    <button type="submit" style="border: 2px solid red; color: red; background-color: transparent;">Remover</button>
+							<input type="hidden" name="clienteId" th:value="${cliente.cpf}" />
+							<!-- Assumindo que o CPF seja o identificador -->
+							<button type="submit"
+								style="border: 2px solid red; color: red; background-color: transparent;">Remover</button>
 						</form>
 					</td>
-	            </tr>
-	        </table>
-	    </div>
+				</tr>
+			</table>
+		</div>
 	</div>
 
 	<!-- Modal Cupons -->
 	<div id="modalCupons" class="modal">
-	    <div class="modal-content">
-	        <span class="close-btn" onclick="closeModal('modalCupons')">&times;</span>
-	        <h2>Gerenciar Cupons</h2>
+		<div class="modal-content">
+			<span class="close-btn" onclick="closeModal('modalCupons')">&times;</span>
+			<h2>Gerenciar Cupons</h2>
 
-	        <button type="button" onclick="mostrarFormularioAdicionarCupom()" style="margin-bottom: 20px;">
-	            + Adicionar Cupom
-	        </button>
+			<button type="button" onclick="mostrarFormularioAdicionarCupom()" style="margin-bottom: 20px;">
+				+ Adicionar Cupom
+			</button>
 
-	        <div id="adicionarCupomFormCupom" style="display: none;">
-	            <h3>Adicionar Cupom</h3>
-	            <form action="/adicionarCupom" method="post">
-	                <label for="dataInicio">Data de Início:</label>
-	                <input type="date" id="dataInicio" name="dataInicio" required><br><br>
+			<div id="adicionarCupomFormCupom" style="display: none;">
+				<h3>Adicionar Cupom</h3>
+				<form action="/adicionarCupom" method="post">
+					<label for="dataInicio">Data de Início:</label>
+					<input type="date" id="dataInicio" name="dataInicio" required><br><br>
 
-	                <label for="dataVencimento">Data de Vencimento:</label>
-	                <input type="date" id="dataVencimento" name="dataVencimento" required><br><br>
+					<label for="dataVencimento">Data de Vencimento:</label>
+					<input type="date" id="dataVencimento" name="dataVencimento" required><br><br>
 
-	                <label for="valorDesconto">Valor do Desconto (R$):</label>
-	                <input type="number" id="valorDesconto" name="valorDesconto" step="0.01" required><br><br>
+					<label for="valorDesconto">Valor do Desconto (R$):</label>
+					<input type="number" id="valorDesconto" name="valorDesconto" step="0.01" required><br><br>
 
-	                <label for="descricao">Descrição:</label>
-	                <input type="text" id="descricao" name="descricao" required><br><br>
+					<label for="descricao">Descrição:</label>
+					<input type="text" id="descricao" name="descricao" required><br><br>
 
-	                <label for="condicoesUso">Condições de Uso:</label>
-	                <input type="text" id="condicoesUso" name="condicoesUso" required><br><br>
+					<label for="condicoesUso">Condições de Uso:</label>
+					<input type="number" id="condicoesUso" name="condicoesUso" required><br><br>
 
-	                <button type="submit">Adicionar Cupom</button>
-	                <button type="button" onclick="cancelarAdicionarCupom()">Cancelar</button>
-	            </form>
-	        </div>
+					<button type="submit">Adicionar Cupom</button>
+					<button type="button" onclick="cancelarAdicionarCupom()">Cancelar</button>
+				</form>
+			</div>
 
-	        <!-- Lista de cupons -->
-	        <h3>Lista de Cupons</h3>
-	        <table id="tabelaCupons">
-	            <thead>
-	                <tr>
-	                    <th>Código</th>
-	                    <th>Valor do Desconto</th>
-	                    <th>Descrição</th>
-	                    <th>Condições de Uso</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr th:each="cupom : ${cupons}">
-	                    <form method="post" action="/editarCupom">
-	                        <input type="hidden" name="codigo" th:value="${cupom.codigo}" />
-	                        <td><input type="text" name="codigoDisplay" th:value="${cupom.codigo}" readonly /></td>
-	                        <td><input type="number" step="0.01" name="valorDesconto" th:value="${cupom.valorDesconto}" /></td>
-	                        <td><input type="text" name="descricao" th:value="${cupom.descricao}" /></td>
-	                        <td><input type="text" name="condicoesUso" th:value="${cupom.condicoesUso}" /></td>
-	                        <td style="border: none">
-	                            <button style="background-color: transparent; border: none; color: green; border-radius: 5px" type="submit">Salvar</button>
-	                        </td>
-	                    </form>
-	                    <td style="border: none">
-	                        <form action="/removerCupom" method="post" style="display:inline;">
-	                            <input type="hidden" name="cupomId" th:value="${cupom.codigo}" />
-	                            <button style="background-color: transparent; border: none; color: red; border-radius: 5px" type="submit">Excluir</button>
-	                        </form>
-	                    </td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
+			<!-- Lista de cupons -->
+			<h3>Lista de Todos os Cupons</h3>
+			<table id="tabelaCupons">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Valor do Desconto</th>
+						<th>Descrição</th>
+						<th>Data de Validade</th>
+						<th>Condições de Uso</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cupom : ${cupons}">
+						<form method="post" action="/editarCupom">
+							<input type="hidden" name="codigo" th:value="${cupom.codigo}" />
+							<td><input type="text" name="codigoDisplay" th:value="${cupom.codigo}" readonly /></td>
+							<td><input type="number" step="0.01" name="valorDesconto"
+									th:value="${cupom.valorDesconto}" /></td>
+							<td><input type="text" name="descricao" th:value="${cupom.descricao}" /></td>
+							<td><input type="data" name="dataValidade" th:value="${cupom.dataVencimento}" /></td>
+							<td><input type="text" name="condicoesUso" th:value="${cupom.condicoesUso}" /></td>
+							<td style="border: none">
+								<button
+									style="background-color: transparent; border: none; color: green; border-radius: 5px"
+									type="submit">Salvar</button>
+							</td>
+						</form>
+						<td style="border: none">
+							<form action="/removerCupom" method="post" style="display:inline;">
+								<input type="hidden" name="cupomId" th:value="${cupom.codigo}" />
+								<button
+									style="background-color: transparent; border: none; color: red; border-radius: 5px"
+									type="submit">Excluir</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<!-- Modal Compras -->
 	<div id="modalCompras" class="modal">
-	    <div class="modal-content">
-	        <span class="close-btn" onclick="closeModal('modalCompras')">&times;</span>
-	        <h2>Compras Finalizadas</h2>
+		<div class="modal-content">
+			<span class="close-btn" onclick="closeModal('modalCompras')">&times;</span>
+			<h2>Compras Finalizadas</h2>
 
-	        <!-- Lista de compras -->
-	        <table id="tabelaCompras">
+			<!-- Lista de compras -->
+			<table id="tabelaCompras">
 				<thead>
-	                <tr>
-	                    <th>Numero</th>
-	                    <th>Data</th>
-	                    <th>Valor Total</th>
+					<tr>
+						<th>Numero</th>
+						<th>Data</th>
+						<th>Valor Total</th>
 						<th>Avaliação</th>
 						<th>Nota</th>
-	                </tr>
-	            </thead>
-	            <tr th:each="compra : ${compras}">
-	                <td th:text="${compra.numero}"></td>
-	                <td th:text="${compra.data}"></td>
-	                <td th:text="${compra.valorTotal}"></td>
-	                <td th:text="${compra.avaliacao}"></td>
-	                <td th:text="${compra.nota}"></td>
-	                <td style="border: none">
+					</tr>
+				</thead>
+				<tr th:each="compra : ${compras}">
+					<td th:text="${compra.numero}"></td>
+					<td th:text="${compra.data}"></td>
+					<td th:text="${compra.valorTotal}"></td>
+					<td th:text="${compra.avaliacao}"></td>
+					<td th:text="${compra.nota}"></td>
+					<td style="border: none">
 						<form action="/removerCompra" method="post">
-						    <input type="hidden" name="compraId" th:value="${compra.numero}" />  <!-- Supondo que o ID seja o identificador da compra -->
-						    <button type="submit" style="border: 2px solid red; color: red; background-color: transparent;">Remover</button>
+							<input type="hidden" name="compraId" th:value="${compra.numero}" />
+							<!-- Supondo que o ID seja o identificador da compra -->
+							<button type="submit"
+								style="border: 2px solid red; color: red; background-color: transparent;">Remover</button>
 						</form>
 					</td>
-	            </tr>
-	        </table>
-	    </div>
+				</tr>
+			</table>
+		</div>
 	</div>
-	
-	<script>
-	    // --- Funções Modais e Tabelas ---
-	    // Modal Produtos
-	    function openModalProdutos() {
-	        document.getElementById('modalProdutos').style.display = 'block';
-	    }
 
-	    function removeProduto(button) {
-	        const row = button.parentElement.parentElement;
-	        row.remove();
-	    }
-		
+	<script>
+		// --- Funções Modais e Tabelas ---
+		// Modal Produtos
+		function openModalProdutos() {
+			document.getElementById('modalProdutos').style.display = 'block';
+		}
+
+		function removeProduto(button) {
+			const row = button.parentElement.parentElement;
+			row.remove();
+		}
+
 		function mostrarFormularioAdicionar() {
-		    document.getElementById('adicionarProdutoForm').style.display = 'block';
+			document.getElementById('adicionarProdutoForm').style.display = 'block';
 		}
 
 		function cancelarAdicionarProduto() {
-		    document.getElementById('adicionarProdutoForm').style.display = 'none';
+			document.getElementById('adicionarProdutoForm').style.display = 'none';
 		}
-		
+
 		function cancelarEdicao() {
-		    location.reload();
+			location.reload();
 		}
 
 		function cancelarEdicaoProduto() {
-		    document.getElementById('editarProdutoForm').style.display = 'none';
+			document.getElementById('editarProdutoForm').style.display = 'none';
 		}
 
-	    // Modal Clientes
-	    function openModalClientes() {
-	        document.getElementById('modalClientes').style.display = 'block';
-	    }
-		
+		// Modal Clientes
+		function openModalClientes() {
+			document.getElementById('modalClientes').style.display = 'block';
+		}
+
 		function mostrarFormularioAdicionarCupom() {
-		    document.getElementById('adicionarCupomFormCupom').style.display = 'block';
+			document.getElementById('adicionarCupomFormCupom').style.display = 'block';
 		}
 
 		function cancelarAdicionarCupom() {
-		    document.getElementById('adicionarCupomFormCupom').style.display = 'none';
+			document.getElementById('adicionarCupomFormCupom').style.display = 'none';
 		}
 
-	    function banirCliente(button) {
-	        const row = button.parentElement.parentElement;
-	        row.remove();
-	    }
+		function banirCliente(button) {
+			const row = button.parentElement.parentElement;
+			row.remove();
+		}
 
-	    // Modal Cupons
-	    function openModalCupons() {
-	        document.getElementById('modalCupons').style.display = 'block';
-	    }
+		// Modal Cupons
+		function openModalCupons() {
+			document.getElementById('modalCupons').style.display = 'block';
+		}
 
-	    function removerCupom(button) {
-	        const row = button.parentElement.parentElement;
-	        row.remove();
-	    }
+		function removerCupom(button) {
+			const row = button.parentElement.parentElement;
+			row.remove();
+		}
 
-	    // Modal Compras
-	    function openModalCompras() {
-	        document.getElementById('modalCompras').style.display = 'block';
-	    }
+		// Modal Compras
+		function openModalCompras() {
+			document.getElementById('modalCompras').style.display = 'block';
+		}
 
-	    function removerAvaliacao(button) {
-	        const row = button.parentElement.parentElement;
-	        row.remove();
-	    }
+		function removerAvaliacao(button) {
+			const row = button.parentElement.parentElement;
+			row.remove();
+		}
 
-	    // Função para fechar qualquer modal
-	    function closeModal(modalId) {
-	        document.getElementById(modalId).style.display = 'none';
-	    }
+		// Função para fechar qualquer modal
+		function closeModal(modalId) {
+			document.getElementById(modalId).style.display = 'none';
+		}
 	</script>
 </body>
-</html>
+<div class="section">
+	<h2 style="text-align:center;">Visualização de Dados</h2>
+	<div style="display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;">
+		<!-- Gráfico de Avaliações -->
+		<div>
+			<h3 style="text-align:center;">Avaliações por Nota</h3>
+			<canvas id="graficoAvaliacoes" width="400" height="300"></canvas>
+		</div>
 
+		<!-- Gráfico de Cupons -->
+		<div>
+			<h3 style="text-align:center;">Compras com vs sem Cupom</h3>
+			<canvas id="graficoCupons" width="400" height="300"></canvas>
+		</div>
+	</div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script th:inline="javascript">
+	// Gráfico de barras - Avaliações por nota
+	const ctx1 = document.getElementById('graficoAvaliacoes');
+	const avaliacoesPorNota = /*[[${avaliacoesPorNota}]]*/ {};
+
+	new Chart(ctx1, {
+		type: 'bar',
+		data: {
+			labels: ['1 estrela', '2 estrelas', '3 estrelas', '4 estrelas', '5 estrelas'],
+			datasets: [{
+				label: 'Quantidade',
+				data: [
+					avaliacoesPorNota['1'] || 0,
+					avaliacoesPorNota['2'] || 0,
+					avaliacoesPorNota['3'] || 0,
+					avaliacoesPorNota['4'] || 0,
+					avaliacoesPorNota['5'] || 0
+				],
+				backgroundColor: '#b6a729'
+			}]
+		},
+		options: {
+			plugins: {
+				title: {
+					display: false
+				}
+			},
+			responsive: true
+		}
+	});
+
+	// Gráfico de pizza - Cupons usados
+	const ctx2 = document.getElementById('graficoCupons');
+	const comprasComCupom = /*[[${comprasComCupom}]]*/0 ;
+	const comprasSemCupom = /*[[${comprasSemCupom}]]*/0 ;
+
+	new Chart(ctx2, {
+		type: 'pie',
+		data: {
+			labels: ['Com Cupom', 'Sem Cupom'],
+			datasets: [{
+				label: 'Uso de Cupons',
+				data: [comprasComCupom, comprasSemCupom],
+				backgroundColor: ['#836635', '#DCBE24']
+			}]
+		},
+		options: {
+			responsive: true
+		}
+	});
+</script>
+
+</html>

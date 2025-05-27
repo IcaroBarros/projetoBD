@@ -2,321 +2,392 @@
 <html lang="pt-br">
 
 <head>
-<meta charset="UTF-8">
-<title>Constância Aromas Decor</title>
-<link rel="icon" href="{{ url_for('static', filename='logo.ico') }}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-<link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
-    rel="stylesheet">
-<link
-    href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
-    rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-<style>
-    body {
-        margin: 0;
-        font-family: "DM Sans", sans-serif;
-    }
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <title>Constância Aromas Decor</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.ico') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: "DM Sans", sans-serif;
+        }
 
-    nav {
-        background-color: white;
-        width: 97%;
-        color: #f3efc5;
-        position: fixed;
-        display: flex;
-        align-items: center;
-        padding: 10px 30px;
-        border-bottom: 1px solid #83663546;
-    }
+        nav {
+            background-color: white;
+            width: 97%;
+            color: #f3efc5;
+            position: fixed;
+            display: flex;
+            align-items: center;
+            padding: 10px 30px;
+            border-bottom: 1px solid #83663546;
+        }
 
-    nav a {
-        font-family: "DM Sans", sans-serif;
-        font-size: 14px;
-        margin: 0 15px;
-        text-decoration: none;
-        color: #b6a729;
-        font-weight: normal;
-        text-transform: uppercase;
-    }
+        nav a {
+            font-family: "DM Sans", sans-serif;
+            font-size: 14px;
+            margin: 0 15px;
+            text-decoration: none;
+            color: #b6a729;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
 
-    nav a:hover {
-        text-decoration: underline;
-    }
-	
-	.dropdown-produto {
-	    position: relative;
-	    display: inline-block;
-	}
+        nav a:hover {
+            text-decoration: underline;
+        }
 
-	.produtos {
-	    display: none;
-	    position: absolute;
-	    background-color: white;
-		padding: 10px 0;
-	    width: 400px;
-	    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-	    z-index: 10;
-	    border-radius: 5px;
-	}
+        .dropdown-produto {
+            position: relative;
+            display: inline-block;
+        }
 
-	.produtos a {
-	    color: #b6a729;
-	    padding: 10px 0;
-		margin: 0;
-		text-indent: 20px;
-	    text-decoration: none;
-	    display: block;
-	    font-family: "DM Sans", sans-serif;
-	    font-size: 12px;
-	    transition: background 0.3s;
-		border-bottom: 1px solid #83663546;
-	}
+        .produtos {
+            display: none;
+            position: absolute;
+            background-color: white;
+            padding: 10px 0;
+            width: 400px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            border-radius: 5px;
+        }
 
-	.dropdown-produto:hover .produtos {
-	    display: block;
-	}
+        .produtos a {
+            color: #b6a729;
+            padding: 10px 0;
+            margin: 0;
+            text-indent: 20px;
+            text-decoration: none;
+            display: block;
+            font-family: "DM Sans", sans-serif;
+            font-size: 12px;
+            transition: background 0.3s;
+            border-bottom: 1px solid #83663546;
+        }
 
-    .login-area {
-        margin-left: auto;
-        position: relative;
-        cursor: pointer;
-        font-size: 30px;
-        color: #b6a729;
-    }
+        .login-area {
+            margin-left: auto;
+            position: relative;
+            cursor: pointer;
+            font-size: 30px;
+            color: #b6a729;
+        }
 
-    .login-area i:hover {
-        color: #DCBE24;
-    }
+        .login-area i:hover {
+            color: #DCBE24;
+        }
 
-	.login-dropdown {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: 30px;
-        z-index: 10;
-	    background-color: white;
-		padding: 10px 0;
-	    width: 280px;
-	    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-	    border-radius: 5px;
-    }
+        .login-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 30px;
+            z-index: 10;
+            background-color: white;
+            padding: 10px 0;
+            width: 280px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
 
-    .login-dropdown a {
-		color: #836635;
-	    padding: 10px 0;
-		margin: 0;
-		text-indent: 20px;
-	    text-decoration: none;
-	    display: block;
-	    font-family: "DM Sans", sans-serif;
-	    font-size: 12px;
-	    transition: background 0.3s;
-    }
+        .login-dropdown a {
+            color: #836635;
+            padding: 10px 0;
+            margin: 0;
+            text-indent: 20px;
+            text-decoration: none;
+            display: block;
+            font-family: "DM Sans", sans-serif;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
 
-    .login-area:hover .login-dropdown {
-        display: block;
-    }
+        .login-area:hover .login-dropdown {
+            display: block;
+        }
 
-    .hero {
-        background: url('home.jpg') center/cover no-repeat;
-        font-family: "Crimson Text", serif;
-        height: 480px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        color: white;
-        font-size: 30px;
-    }
+        .hero {
+            background: url('home.jpg') center/cover no-repeat;
+            font-family: "Crimson Text", serif;
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            color: white;
+            font-size: 30px;
+        }
 
-    .hero button {
-        font-family: 'DM Sans', sans-serif;
-        letter-spacing: 2px;
-        background-color: transparent;
-        border: 1px solid white;
-        color: white;
-        padding: 10px 70px;
-        backdrop-filter: blur(10px);
-        margin: 20px 0 40px;
-        text-transform: uppercase;
-        font-weight: bold;
-        cursor: pointer;
-    }
+        .hero button {
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 2px;
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 10px 70px;
+            backdrop-filter: blur(10px);
+            margin: 20px 0 40px;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    .hero button:hover {
-        text-decoration: underline;
-    }
+        .hero button:hover {
+            text-decoration: underline;
+        }
 
-    .section {
-        padding: 40px;
-        text-align: center;
-        color: #5c5122;
-    }
+        .section {
+            padding: 40px;
+            text-align: center;
+            color: #5c5122;
+        }
 
-    .section h2 {
-        color: #978c2b;
-        margin-bottom: 20px;
-    }
+        .section h2 {
+            color: #978c2b;
+            margin-bottom: 20px;
+        }
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 40px;
-        margin: 0 100px;
-        margin-top: 20px;
-    }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin: 0 100px;
+            margin-top: 20px;
+        }
 
-    .card {
-        background-color: white;
-        border: 2px solid #83663546;
-        padding: 20px;
-        color: #3e3c2d;
-        height: 400px;
-    }
+        .card {
+            background-color: white;
+            border: 2px solid #83663546;
+            padding: 20px;
+            color: #3e3c2d;
+            height: 400px;
+        }
 
-    .card:hover {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        transform: scale(1.05);
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        .card:hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: scale(1.05);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .card img {
-        width: 100%;
-        height: 340px;
-        object-fit: cover;
-    }
+        .card img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+        }
 
-    .card h3 {
-        color: #836635;
-        font-family: "Crimson Text", serif;
-        font-size: 20px;
-        margin: 5px 0;
-    }
+        .card h3 {
+            color: #836635;
+            font-family: "Crimson Text", serif;
+            font-size: 20px;
+            margin: 5px 0;
+        }
 
-    #contato a {
-        color: #5e5524;
-        text-decoration: none;
-    }
+        #contato a {
+            color: #5e5524;
+            text-decoration: none;
+        }
 
-    footer {
-        background-color: #5e5524;
-        text-align: center;
-        padding: 15px;
-        color: white;
-        font-size: 14px;
-        margin-top: 40px;
-    }
+        footer {
+            background-color: #5e5524;
+            text-align: center;
+            padding: 15px;
+            color: white;
+            font-size: 14px;
+            margin-top: 40px;
+        }
 
-    .modal-overlay {
-        display: none;
-        position: fixed;
-        z-index: 999;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        justify-content: center;
-        align-items: center;
-    }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
 
-    .modal-container {
-        background-color: white;
-        color: black;
-        height: 500px;
-        width: 700px;
-        display: grid;
-        grid-template-columns: 50% 50%;
-        box-shadow: 0 0 10px 2px rgba(85, 87, 68, 0.278);
-        border-radius: 10px;
-    }
+        .modal-container {
+            background-color: white;
+            color: black;
+            height: 500px;
+            width: 700px;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            box-shadow: 0 0 10px 2px rgba(85, 87, 68, 0.278);
+            border-radius: 10px;
+        }
 
-    .modal-container .drawing {
-        background: linear-gradient(215deg, #DCBE24 0%, #836635 100%);
-        border-radius: 8px 0 0 8px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        color: white;
-    }
+        .modal-container .drawing {
+            background: linear-gradient(215deg, #DCBE24 0%, #836635 100%);
+            border-radius: 8px 0 0 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+        }
 
-    .modal-container .login {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: #978c2b;
-    }
+        .modal-container .login {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #978c2b;
+        }
 
-    .modal-container .input-container {
-        position: relative;
-        margin-bottom: 10px;
-    }
+        .modal-container .input-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
 
-    .modal-container .input-container i {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #a99d38;
-        padding-right: 7px;
-        border-right: 2px solid #a99d38;
-    }
+        .modal-container .input-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a99d38;
+            padding-right: 7px;
+            border-right: 2px solid #a99d38;
+        }
 
-    .modal-container input {
-        border: none;
-        border-left: 5px solid #978c2b;
-        border-radius: 4px;
-        width: 200px;
-        height: 35px;
-        padding-left: 38px;
-        box-shadow: 0 0 10px 2px rgba(85, 87, 68, 0.278);
-    }
+        .modal-container input {
+            border: none;
+            border-left: 5px solid #978c2b;
+            border-radius: 4px;
+            width: 200px;
+            height: 35px;
+            padding-left: 38px;
+            box-shadow: 0 0 10px 2px rgba(85, 87, 68, 0.278);
+        }
 
-    .modal-container ::placeholder {
-        color: rgba(51, 24, 4, 0.697);
-        font-family: "Raleway", sans-serif;
-        font-size: 12px;
-        font-style: italic;
-    }
+        .modal-container ::placeholder {
+            color: rgba(51, 24, 4, 0.697);
+            font-family: "Raleway", sans-serif;
+            font-size: 12px;
+            font-style: italic;
+        }
 
-    .modal-container button {
-        border: 2px solid white;
-        border-radius: 10px;
-        background-color: transparent;
-        color: white;
-        align-self: center;
-        padding: 10px 15px;
-        font-family: "Raleway", sans-serif;
-        font-weight: 600;
-        margin-top: 20px;
-        cursor: pointer;
-    }
+        .modal-container button {
+            border: 2px solid white;
+            border-radius: 10px;
+            background-color: transparent;
+            color: white;
+            align-self: center;
+            padding: 10px 15px;
+            font-family: "Raleway", sans-serif;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+        }
 
-    .modal-container button:hover {
-        text-decoration: underline;
-    }
-</style>
+        .modal-container button:hover {
+            text-decoration: underline;
+        }
+
+        #indicacao {
+            background-color: #f3efc5;
+            padding: 40px 20px;
+            margin: 40px auto;
+            text-align: center;
+            border: 2px solid #544d1867;
+            border-left: none;
+        }
+
+        #indicacao h2 {
+            font-family: "Kaushan Script", cursive;
+            color: #836635;
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
+
+        #indicacao p {
+            font-size: 16px;
+            color: #5c5122;
+            margin-bottom: 30px;
+        }
+
+        #formIndicacao {
+            width: 50%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #formIndicacao .input-container {
+            margin-bottom: 15px;
+            text-align: left;
+            width: 550px;
+        }
+
+        #formIndicacao label {
+            display: block;
+            font-weight: 700;
+            color: #5e5524;
+            margin-bottom: 6px;
+            font-family: "Raleway", sans-serif;
+            font-size: 14px;
+        }
+
+        #formIndicacao input[type="text"],
+        #formIndicacao input[type="email"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #83663546;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: "Raleway", sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        #formIndicacao input[type="text"]:focus,
+        #formIndicacao input[type="email"]:focus {
+            border-color: #b6a729;
+            outline: none;
+        }
+
+        #formIndicacao button {
+            background-color: #b6a729;
+            color: white;
+            font-weight: 700;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: "Raleway", sans-serif;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            width: 300px;
+        }
+
+        #formIndicacao button:hover {
+            background-color: #836635;
+        }
+    </style>
 </head>
 
 <body>
-	<nav>
+    <nav>
         <img style="width: 140px; margin-right: 40px;"
             src="https://constanciaaromasdecor.com.br/wp-content/uploads/2023/05/LOGO_CONSTANCIA.png">
         <a href="/">Home</a>
-		<div class="dropdown-produto">
-	        <a href="/produtos">Produtos</a>
-	        <div class="produtos">
-	            <a href="/produtos/velas">Velas Aromáticas</a>
-	            <a href="/produtos/difusores">Difusores</a>
-	            <a style="border-bottom: none" href="/produtos/cremes">Cremes Corporais</a>
-	        </div>
-	    </div>
+        <a href="/produtos">Produtos</a>
         <a href="#categorias">Categorias</a>
         <a href="#contato">Contato</a>
 
@@ -328,13 +399,13 @@
             </div>
         </div>
     </nav>
-		
+
     <div id="loginModal" class="modal-overlay">
         <div class="modal-container">
             <div class="drawing">
                 <div
                     style="display: flex; flex-direction: column; align-items: center; margin: auto; text-align: center;">
-                    <img style="width: 250px;" src="download.png">
+                    <img style="width: 250px;" src="/download.png">
                     <p style="margin: 0; margin-bottom: 10px; letter-spacing: -3px; margin-left: 5px; font-size: 18px;">
                         _____________________________</p>
                     <p style="width: 250px; font-size: 13px;">Se você não está registrado, seja cliente da nossa
@@ -371,7 +442,7 @@
             <div class="drawing">
                 <div
                     style="display: flex; flex-direction: column; align-items: center; margin: auto; text-align: center;">
-                    <img style="width: 250px;" src="download.png">
+                    <img style="width: 250px;" src="/download.png">
                     <p style="margin: 0; margin-bottom: 10px; letter-spacing: -3px; margin-left: 5px; font-size: 18px;">
                         _____________________________</p>
                     <p style="width: 250px; font-size: 13px;">Preencha seus dados para criar sua conta e começar a
@@ -390,20 +461,20 @@
                         <i class="bi bi-person"></i>
                         <input type="text" name="nome" placeholder="Nome completo" required>
                     </div>
-                    <div class="input-container">
-                        <i class="bi bi-telephone"></i>
-                        <input type="text" name="telefone" placeholder="Telefone" required>
+                    <div id="telefonesContainer">
+                        <div class="input-container telefone-field">
+                            <i class="bi bi-telephone"></i>
+                            <input type="text" name="telefone" placeholder="Telefone" required>
+                        </div>
                     </div>
+                    <button style="color: #978c2b; margin: 0; text-decoration: underline" type="button"
+                        id="addTelefoneBtn">+ Adicionar telefone</button>
                     <div class="input-container">
                         <i class="bi bi-envelope"></i>
                         <input type="email" name="email" placeholder="E-mail" required>
                     </div>
                     <div class="input-container">
-                        <i class="bi bi-house-door"></i>
-                        <input type="text" name="endereco" placeholder="Endereço completo" required>
-                    </div>
-					<div class="input-container">
-					<i class="bi bi-key"></i>
+                        <i class="bi bi-key"></i>
                         <input type="password" name="senha" placeholder="Crie sua senha" required>
                     </div>
                     <button type="submit" style="border: 2px solid #978c2b; color: #978c2b;">
@@ -420,7 +491,7 @@
 
     <div class="hero">
         <p style="margin: 0;">Acalme a sua rotina com Constancia</p>
-        <button>CONHEÇA</button>
+        <a href="/produtos"><button>CONHEÇA</button></a>
     </div>
 
     <div class="section" id="categorias">
@@ -447,19 +518,33 @@
         </div>
     </div>
 
-    <div class="section" id="cupons">
-        <h2>Cupons de Desconto</h2>
-        <p>Consulte cupons válidos para sua próxima compra.</p>
+    <div th:if="${erro}" id="flash-message" th:text="${erro}" style="display:none; color: red"></div>
+    <div th:if="${sucesso}" id="flash-message" th:text="${sucesso}" style="display:none; color: darkgreen"></div>
+
+    <div class="section" id="indicacao">
+        <h2>Indique um amigo</h2>
+        <p>Ajude a espalhar aromas e aconchego! Indique um amigo e ganhe benefícios.</p>
+        <form action="/indicarCliente" method="post" id="formIndicacao">
+            <div class="input-container">
+                <label for="cpfIndicador">Seu CPF</label>
+                <input type="text" id="cpfIndicador" name="cpfIndicador" placeholder="Digite seu CPF" required />
+            </div>
+            <div class="input-container">
+                <label for="nomeAmigo">Nome do amigo</label>
+                <input type="text" id="nomeAmigo" name="nomeAmigo" placeholder="Nome do amigo" required />
+            </div>
+            <div class="input-container">
+                <label for="cpfIndicado">Cpf do amigo</label>
+                <input type="text" id="cpfIndicado" name="cpfIndicado" placeholder="Cpf do amigo" required />
+            </div>
+            <button type="submit">Enviar indicação</button>
+        </form>
     </div>
 
-    <div class="section" id="avaliacoes">
-        <h2>Avaliações de Clientes</h2>
-        <p>Confira o que nossos clientes dizem sobre suas experiências.</p>
-    </div>
 
     <div class="section" id="contato">
         <h2>Contato</h2>
-        <p>Av. República do Líbano, 251 – Pina, Recife – PE, 51110-160, RioMar, Piso L2</p>
+        <p>Av. República do Líbano, 251 - Pina, Recife - PE, 51110-160, RioMar, Piso L2</p>
         <a href="tel:+5581996196398">Telefone: (81) 99619-6398</a><br>
         <a href="mailto: contato@constanciaaromasdecor.com">Email: contato@constanciaaromasdecor.com</a>
     </div>
@@ -469,6 +554,24 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const flashMessageDiv = document.getElementById('flash-message');
+            if (flashMessageDiv) {
+                const mensagem = flashMessageDiv.textContent.trim();
+                if (mensagem.length > 0) {
+                alert(mensagem); 
+                }
+            }
+        });
+
+        document.getElementById('addTelefoneBtn').addEventListener('click', function () {
+            const container = document.getElementById('telefonesContainer');
+            const original = container.querySelector('.telefone-field');
+            const clone = original.cloneNode(true);
+            clone.querySelector('input').value = '';
+            container.appendChild(clone);
+        });
+
         const loginClienteLink = document.querySelector('a[href="/login_cliente"]');
         const modal = document.getElementById('loginModal');
 
@@ -506,6 +609,48 @@
         });
 
     </script>
+    <script>
+        const ctx = document.getElementById('graficoAvaliacoes');
+        const avaliacoesPorNota = /*[[${avaliacoesPorNota}]]*/ {};
+
+        const labels = ['1 estrela', '2 estrelas', '3 estrelas', '4 estrelas', '5 estrelas'];
+        const data = [
+            avaliacoesPorNota['1'] || 0,
+            avaliacoesPorNota['2'] || 0,
+            avaliacoesPorNota['3'] || 0,
+            avaliacoesPorNota['4'] || 0,
+            avaliacoesPorNota['5'] || 0
+        ];
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Quantidade de Avaliações',
+                    data: data,
+                    backgroundColor: '#b6a729',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Distribuição de Notas (Avaliações)',
+                        color: '#5e5524',
+                        font: { size: 18 }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
 
 </body>
+
 </html>

@@ -85,13 +85,68 @@ public class ClienteDAO {
     }
     
     public void remover(String cpf) {
-        String sql = "DELETE FROM cliente WHERE cpf = ?";
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, cpf);
-            stmt.executeUpdate();
+        String sqlDeletaTelefones = "DELETE FROM telefone WHERE cpf_cliente = ?";
+        String sqlDeletaCompras = "DELETE FROM compra_avalia WHERE cpf_cliente = ?";
+        String sqlDeletaIndicacoes = "DELETE FROM indica WHERE cpf_indicador = ? OR cpf_indicado = ?";
+        String sqlDeletaCliente = "DELETE FROM cliente WHERE cpf = ?";
+
+        try (Connection conn = Conexao.conectar()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmtTelefones = conn.prepareStatement(sqlDeletaTelefones);
+                PreparedStatement stmtCompras = conn.prepareStatement(sqlDeletaCompras);
+                PreparedStatement stmtIndicacoes = conn.prepareStatement(sqlDeletaIndicacoes);
+                PreparedStatement stmtCliente = conn.prepareStatement(sqlDeletaCliente)) {
+
+                // Deleta telefones do cliente
+                stmtTelefones.setString(1, cpf);
+                stmtTelefones.executeUpdate();
+
+                // Deleta compras do cliente
+                stmtCompras.setString(1, cpf);
+                stmtCompras.executeUpdate();
+
+                // Deleta indicações onde ele é indicador ou indicado
+                stmtIndicacoes.setString(1, cpf);
+                stmtIndicacoes.setString(2, cpf);
+                stmtIndicacoes.executeUpdate();
+
+                // Deleta o cliente
+                stmtCliente.setString(1, cpf);
+                stmtCliente.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                e.printStackTrace();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public Cliente buscarPorCpf(String cpf) {
+        String sql = "SELECT * FROM cliente WHERE cpf = ?";
+        try (Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, cpf);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Cliente(
+                    rs.getString("cpf"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("numero"),
+                    rs.getString("senha")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
