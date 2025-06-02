@@ -1,4 +1,4 @@
-# projetoBD
+# projeto Banco de Dados
 Projeto feito por Ícaro Barros e Gabriel Ferraz para a cadeira de BD
 
 # 🌸 Constância Aromas Decor
